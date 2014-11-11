@@ -1,130 +1,66 @@
 <?php
-/**
- * mroczek functions and definitions
- *
- * @package mroczek
- */
-
-/**
- * Set the content width based on the theme's design and stylesheet.
- */
-if ( ! isset( $content_width ) ) {
-	$content_width = 640; /* pixels */
+add_action( 'after_setup_theme', 'blankslate_setup' );
+function blankslate_setup()
+{
+load_theme_textdomain( 'blankslate', get_template_directory() . '/languages' );
+add_theme_support( 'automatic-feed-links' );
+add_theme_support( 'post-thumbnails' );
+global $content_width;
+if ( ! isset( $content_width ) ) $content_width = 640;
+register_nav_menus(
+array( 'main-menu' => __( 'Main Menu', 'blankslate' ) )
+);
 }
-
-if ( ! function_exists( 'mroczek_setup' ) ) :
-/**
- * Sets up theme defaults and registers support for various WordPress features.
- *
- * Note that this function is hooked into the after_setup_theme hook, which
- * runs before the init hook. The init hook is too late for some features, such
- * as indicating support for post thumbnails.
- */
-function mroczek_setup() {
-
-	/*
-	 * Make theme available for translation.
-	 * Translations can be filed in the /languages/ directory.
-	 * If you're building a theme based on mroczek, use a find and replace
-	 * to change 'mroczek' to the name of your theme in all the template files
-	 */
-	load_theme_textdomain( 'mroczek', get_template_directory() . '/languages' );
-
-	// Add default posts and comments RSS feed links to head.
-	add_theme_support( 'automatic-feed-links' );
-
-	/*
-	 * Enable support for Post Thumbnails on posts and pages.
-	 *
-	 * @link http://codex.wordpress.org/Function_Reference/add_theme_support#Post_Thumbnails
-	 */
-	//add_theme_support( 'post-thumbnails' );
-
-	// This theme uses wp_nav_menu() in one location.
-	register_nav_menus( array(
-		'primary' => __( 'Primary Menu', 'mroczek' ),
-	) );
-
-	/*
-	 * Switch default core markup for search form, comment form, and comments
-	 * to output valid HTML5.
-	 */
-	add_theme_support( 'html5', array(
-		'search-form', 'comment-form', 'comment-list', 'gallery', 'caption',
-	) );
-
-	/*
-	 * Enable support for Post Formats.
-	 * See http://codex.wordpress.org/Post_Formats
-	 */
-	add_theme_support( 'post-formats', array(
-		'aside', 'image', 'video', 'quote', 'link',
-	) );
-
-	// Set up the WordPress core custom background feature.
-	add_theme_support( 'custom-background', apply_filters( 'mroczek_custom_background_args', array(
-		'default-color' => 'ffffff',
-		'default-image' => '',
-	) ) );
+add_action( 'wp_enqueue_scripts', 'blankslate_load_scripts' );
+function blankslate_load_scripts()
+{
+wp_enqueue_script( 'jquery' );
 }
-endif; // mroczek_setup
-add_action( 'after_setup_theme', 'mroczek_setup' );
-
-/**
- * Register widget area.
- *
- * @link http://codex.wordpress.org/Function_Reference/register_sidebar
- */
-function mroczek_widgets_init() {
-	register_sidebar( array(
-		'name'          => __( 'Sidebar', 'mroczek' ),
-		'id'            => 'sidebar-1',
-		'description'   => '',
-		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</aside>',
-		'before_title'  => '<h1 class="widget-title">',
-		'after_title'   => '</h1>',
-	) );
+add_action( 'comment_form_before', 'blankslate_enqueue_comment_reply_script' );
+function blankslate_enqueue_comment_reply_script()
+{
+if ( get_option( 'thread_comments' ) ) { wp_enqueue_script( 'comment-reply' ); }
 }
-add_action( 'widgets_init', 'mroczek_widgets_init' );
-
-/**
- * Enqueue scripts and styles.
- */
-function mroczek_scripts() {
-	wp_enqueue_style( 'mroczek-style', get_stylesheet_uri() );
-
-	wp_enqueue_script( 'mroczek-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20120206', true );
-
-	wp_enqueue_script( 'mroczek-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20130115', true );
-
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
+add_filter( 'the_title', 'blankslate_title' );
+function blankslate_title( $title ) {
+if ( $title == '' ) {
+return '&rarr;';
+} else {
+return $title;
 }
-add_action( 'wp_enqueue_scripts', 'mroczek_scripts' );
-
-/**
- * Implement the Custom Header feature.
- */
-//require get_template_directory() . '/inc/custom-header.php';
-
-/**
- * Custom template tags for this theme.
- */
-require get_template_directory() . '/inc/template-tags.php';
-
-/**
- * Custom functions that act independently of the theme templates.
- */
-require get_template_directory() . '/inc/extras.php';
-
-/**
- * Customizer additions.
- */
-require get_template_directory() . '/inc/customizer.php';
-
-/**
- * Load Jetpack compatibility file.
- */
-require get_template_directory() . '/inc/jetpack.php';
+}
+add_filter( 'wp_title', 'blankslate_filter_wp_title' );
+function blankslate_filter_wp_title( $title )
+{
+return $title . esc_attr( get_bloginfo( 'name' ) );
+}
+add_action( 'widgets_init', 'blankslate_widgets_init' );
+function blankslate_widgets_init()
+{
+register_sidebar( array (
+'name' => __( 'Sidebar Widget Area', 'blankslate' ),
+'id' => 'primary-widget-area',
+'before_widget' => '<li id="%1$s" class="widget-container %2$s">',
+'after_widget' => "</li>",
+'before_title' => '<h3 class="widget-title">',
+'after_title' => '</h3>',
+) );
+}
+function blankslate_custom_pings( $comment )
+{
+$GLOBALS['comment'] = $comment;
+?>
+<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>"><?php echo comment_author_link(); ?></li>
+<?php 
+}
+add_filter( 'get_comments_number', 'blankslate_comments_number' );
+function blankslate_comments_number( $count )
+{
+if ( !is_admin() ) {
+global $id;
+$comments_by_type = &separate_comments( get_comments( 'status=approve&post_id=' . $id ) );
+return count( $comments_by_type['comment'] );
+} else {
+return $count;
+}
+}

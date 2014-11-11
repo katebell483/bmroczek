@@ -1,15 +1,9 @@
-<?php
-/**
- * The sidebar containing the main widget area.
- *
- * @package mroczek
- */
-
-if ( ! is_active_sidebar( 'sidebar-1' ) ) {
-	return;
-}
-?>
-
-<div id="secondary" class="widget-area" role="complementary">
-	<?php dynamic_sidebar( 'sidebar-1' ); ?>
-</div><!-- #secondary -->
+<aside id="sidebar" role="complementary">
+<?php if ( is_active_sidebar( 'primary-widget-area' ) ) : ?>
+<div id="primary" class="widget-area">
+<ul class="xoxo">
+<?php dynamic_sidebar( 'primary-widget-area' ); ?>
+</ul>
+</div>
+<?php endif; ?>
+</aside>

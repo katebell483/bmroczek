@@ -1,69 +1,41 @@
-<?php
-/**
- * The template for displaying comments.
- *
- * The area of the page that contains both current comments
- * and the comment form.
- *
- * @package mroczek
- */
-
-/*
- * If the current post is protected by a password and
- * the visitor has not yet entered the password we will
- * return early without loading the comments.
- */
-if ( post_password_required() ) {
-	return;
-}
+<?php if ( 'comments.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) return; ?>
+<section id="comments">
+<?php 
+if ( have_comments() ) : 
+global $comments_by_type;
+$comments_by_type = &separate_comments( $comments );
+if ( ! empty( $comments_by_type['comment'] ) ) : 
 ?>
-
-<div id="comments" class="comments-area">
-
-	<?php // You can start editing here -- including this comment! ?>
-
-	<?php if ( have_comments() ) : ?>
-		<h2 class="comments-title">
-			<?php
-				printf( _nx( 'One thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', get_comments_number(), 'comments title', 'mroczek' ),
-					number_format_i18n( get_comments_number() ), '<span>' . get_the_title() . '</span>' );
-			?>
-		</h2>
-
-		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // are there comments to navigate through ?>
-		<nav id="comment-nav-above" class="comment-navigation" role="navigation">
-			<h1 class="screen-reader-text"><?php _e( 'Comment navigation', 'mroczek' ); ?></h1>
-			<div class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'mroczek' ) ); ?></div>
-			<div class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'mroczek' ) ); ?></div>
-		</nav><!-- #comment-nav-above -->
-		<?php endif; // check for comment navigation ?>
-
-		<ol class="comment-list">
-			<?php
-				wp_list_comments( array(
-					'style'      => 'ol',
-					'short_ping' => true,
-				) );
-			?>
-		</ol><!-- .comment-list -->
-
-		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // are there comments to navigate through ?>
-		<nav id="comment-nav-below" class="comment-navigation" role="navigation">
-			<h1 class="screen-reader-text"><?php _e( 'Comment navigation', 'mroczek' ); ?></h1>
-			<div class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'mroczek' ) ); ?></div>
-			<div class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'mroczek' ) ); ?></div>
-		</nav><!-- #comment-nav-below -->
-		<?php endif; // check for comment navigation ?>
-
-	<?php endif; // have_comments() ?>
-
-	<?php
-		// If comments are closed and there are comments, let's leave a little note, shall we?
-		if ( ! comments_open() && '0' != get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) :
-	?>
-		<p class="no-comments"><?php _e( 'Comments are closed.', 'mroczek' ); ?></p>
-	<?php endif; ?>
-
-	<?php comment_form(); ?>
-
-</div><!-- #comments -->
+<section id="comments-list" class="comments">
+<h3 class="comments-title"><?php comments_number(); ?></h3>
+<?php if ( get_comment_pages_count() > 1 ) : ?>
+<nav id="comments-nav-above" class="comments-navigation" role="navigation">
+<div class="paginated-comments-links"><?php paginate_comments_links(); ?></div>
+</nav>
+<?php endif; ?>
+<ul>
+<?php wp_list_comments( 'type=comment' ); ?>
+</ul>
+<?php if ( get_comment_pages_count() > 1 ) : ?>
+<nav id="comments-nav-below" class="comments-navigation" role="navigation">
+<div class="paginated-comments-links"><?php paginate_comments_links(); ?></div>
+</nav>
+<?php endif; ?>
+</section>
+<?php 
+endif; 
+if ( ! empty( $comments_by_type['pings'] ) ) : 
+$ping_count = count( $comments_by_type['pings'] ); 
+?>
+<section id="trackbacks-list" class="comments">
+<h3 class="comments-title"><?php echo '<span class="ping-count">' . $ping_count . '</span> ' . ( $ping_count > 1 ? __( 'Trackbacks', 'blankslate' ) : __( 'Trackback', 'blankslate' ) ); ?></h3>
+<ul>
+<?php wp_list_comments( 'type=pings&callback=blankslate_custom_pings' ); ?>
+</ul>
+</section>
+<?php 
+endif; 
+endif;
+if ( comments_open() ) comment_form();
+?>
+</section>

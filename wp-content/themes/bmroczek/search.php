@@ -1,45 +1,24 @@
-<?php
-/**
- * The template for displaying search results pages.
- *
- * @package mroczek
- */
-
-get_header(); ?>
-
-	<section id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
-
-		<?php if ( have_posts() ) : ?>
-
-			<header class="page-header">
-				<h1 class="page-title"><?php printf( __( 'Search Results for: %s', 'mroczek' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
-			</header><!-- .page-header -->
-
-			<?php /* Start the Loop */ ?>
-			<?php while ( have_posts() ) : the_post(); ?>
-
-				<?php
-				/**
-				 * Run the loop for the search to output the results.
-				 * If you want to overload this in a child theme then include a file
-				 * called content-search.php and that will be used instead.
-				 */
-				get_template_part( 'content', 'search' );
-				?>
-
-			<?php endwhile; ?>
-
-			<?php mroczek_paging_nav(); ?>
-
-		<?php else : ?>
-
-			<?php get_template_part( 'content', 'none' ); ?>
-
-		<?php endif; ?>
-
-		</main><!-- #main -->
-	</section><!-- #primary -->
-
+<?php get_header(); ?>
+<section id="content" role="main">
+<?php if ( have_posts() ) : ?>
+<header class="header">
+<h1 class="entry-title"><?php printf( __( 'Search Results for: %s', 'blankslate' ), get_search_query() ); ?></h1>
+</header>
+<?php while ( have_posts() ) : the_post(); ?>
+<?php get_template_part( 'entry' ); ?>
+<?php endwhile; ?>
+<?php get_template_part( 'nav', 'below' ); ?>
+<?php else : ?>
+<article id="post-0" class="post no-results not-found">
+<header class="header">
+<h2 class="entry-title"><?php _e( 'Nothing Found', 'blankslate' ); ?></h2>
+</header>
+<section class="entry-content">
+<p><?php _e( 'Sorry, nothing matched your search. Please try again.', 'blankslate' ); ?></p>
+<?php get_search_form(); ?>
+</section>
+</article>
+<?php endif; ?>
+</section>
 <?php get_sidebar(); ?>
 <?php get_footer(); ?>
