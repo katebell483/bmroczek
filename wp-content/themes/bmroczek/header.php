@@ -13,6 +13,13 @@
 
 <body <?php body_class(); ?>>
 
+	<div class="overlay">
+		<div class="wrapper">
+			<img src=''/>
+			<h1 class="overlay-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h1>
+		</div>
+	</div>
+
 	<div id="wrapper" class="hfeed">
 
 		<header id="header" role="banner">
