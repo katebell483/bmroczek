@@ -20,7 +20,10 @@ var Slideshow = {
 
         // size container
         Slideshow.sizeContainer();
-        
+  
+		// scale viewport
+		Slideshow.scaleViewport();
+      
         $("body").on('mousemove', function(e) {
             if (e.clientX < $(window).width() / 2) {
                 Slideshow.MOUSESIDE = "L";
@@ -46,16 +49,26 @@ var Slideshow = {
 			Slideshow.showDetail(e);
 		});
 
-        // add active state to nav after page load
-		$(window).bind("load", function() {
-			$(".current_page_item").css("font-weight", "700").css("color", "#000");
-		});
-
 		// close pink state on button click
 		$(".exit").click(function() {
 			$(".overlay").fadeOut(100);
 			$(".overlay").find("iframe").remove();
 		});
+	
+		// fade in bio page
+		$(".page-id-6 p").each(function(index) {
+        	$(this).fadeTo(300 , 1);
+        });
+		
+		// fade in contact page
+		$(".page-id-22 p").each(function(index) {
+        	$(this).fadeTo(300 , 1);
+        });
+		
+		// fade in appointments page
+		$(".page-id-20 p").each(function(index) {
+        	$(this).fadeTo(300 , 1);
+        });
 
 		// get video thumbnails
 		Slideshow.getVideoThumbnails();
@@ -70,14 +83,13 @@ var Slideshow = {
 
         $(".home .post").each(function(index) {
             $(this).find("img").load(function() {
-                totalWidth += parseInt($(this).width(), 10) + 10;
+                totalWidth += parseInt($(this).width(), 10) + 5;
                 $("#content").width(totalWidth);
         		$(this).fadeTo(600 , 1);
             });
             
 
         });
-
     },
 
     center: function(e) {
@@ -101,6 +113,33 @@ var Slideshow = {
 
     },
 
+	showPhoneDetail: function(target) {
+		console.log("showPhoneDetail");
+
+		film = target.parent().hasClass("category-video"),
+		title = target.parent().parent().siblings("h1").text();
+		
+		if(film) {
+
+			// remove existing iframes and add any missing thumbnails		
+			$("iframe").remove();	
+			$(".thumbnail").show();
+
+			id = target.siblings(".entry-content").find("p").text();
+
+			var iframeHtml = "<iframe id='player1' src='//player.vimeo.com/video/" + id + "?api=1' width='100%' height='190' frameborder='0'></iframe>"
+			target.parent().append(iframeHtml);
+			target.hide();
+		
+		} else {
+			if(title.length <= 1) {
+				$(".post h1").hide();
+			};
+		}
+
+
+	},
+
 	showDetail: function(e) {
 		console.log("showDetail");
 
@@ -108,24 +147,52 @@ var Slideshow = {
 			overlay = $(".overlay"),
 			overlayImg = overlay.find(".main-img"),
 			wrapperWidth = Math.ceil(target.width() * overlayImg.height()/target.height()),
-			film = target.parent().hasClass("category-video");
+			film = target.parent().hasClass("category-video"),
+			title = target.parent().parent().siblings("h1").text();
+
+
+		if(navigator.userAgent.match(/iPhone/i)) {
+			Slideshow.showPhoneDetail(target);
+			return;
+		}
 
 		// if iframe, then show that. otherwise show img
 		if(film) {
-			title = target.siblings("h1").text();
-			var iframe = "<iframe src='//player.vimeo.com/video/" + title + "?title=0&amp;byline=0&amp;portrait=0;autoplay=1' width='978' height='550' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen autoplay></iframe>"
+
+			id = target.siblings(".entry-content").find("p").text();
+		
+			if (navigator.userAgent.match(/iPad/i)) {
+
+				var iframe = "<iframe src='//player.vimeo.com/video/" + id + "?title=0&amp;byline=0&amp;portrait=0;autoplay=1' width='700' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen autoplay></iframe>"
+				$(".wrapper").height(550);	
+
+			} else {
+
+				$(".wrapper").height(550);
+				var iframe = "<iframe src='//player.vimeo.com/video/" + id + "?title=0&amp;byline=0&amp;portrait=0;autoplay=1' width='978' height='550' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen autoplay></iframe>"
+
+			}
 			overlay.find(".wrapper").prepend(iframe);	
-			overlay.find(".wrapper h1").text("");		
-			overlay.find(".wrapper").height(550);
+
 		} else {
-			title = target.parent().parent().siblings("h1").text();
 			if(title.length <= 1) title = "";
-			overlay.find(".wrapper h1").text(title);		
+			overlay.find(".wrapper h1").text(title);
+			
+			// size differently for landscalpe and ipad
+			if(target.height() < target.width() && navigator.userAgent.match(/ipad/i)) {	
+				$(".overlay .wrapper .main-img").width("100%").height("auto");			
+				$(".overlay .wrapper").width("80%").css("max-width", "80%").css("max-height", "85%");			
+			} else if(navigator.userAgent.match(/ipad/i)) {
+				$(".overlay .wrapper .main-img").height(550).width(target.width() * 550/target.height());			
+				$(".overlay .wrapper").width(target.width() * 550/target.height());			
+			} else {
+				overlay.find(".wrapper").css("width", (wrapperWidth));		
+			}
+
 			overlayImg.attr("src", (target.attr("src")));		
-			overlay.find(".wrapper").css("width", (wrapperWidth));		
 		}
 
-		overlay.fadeIn(200);	
+		overlay.fadeIn(300);	
 	},
 
 	getVideoThumbnails: function() {
@@ -135,7 +202,7 @@ var Slideshow = {
 
 		$(".page-id-66 .post").each(function() {
 			var curPost = $(this),
-				id = $(this).find("h1").text(),
+				id = curPost.find(".entry-content p").text(),
 				dataUrl = "http://vimeo.com/api/v2/video/" + id + ".json";
 
 			id = id.trim();
@@ -163,6 +230,23 @@ var Slideshow = {
 				$(this).hide();
 			}
 		});
+	},
+
+	scaleViewport: function() {
+		console.log("scaleViewport");
+
+		// only scale for ipad
+		if (navigator.userAgent.match(/iPad/i)) {
+			var viewportmeta = document.querySelector('meta[name="viewport"]');
+			if (viewportmeta) {
+				viewportmeta.content = 'width=device-width, minimum-scale=0.95, maximum-scale=0.95, initial-scale=0.95';
+				document.body.addEventListener('gesturestart', function () {
+					viewportmeta.content = 'width=device-width, minimum-scale=0.25, maximum-scale=0.95';
+				}, false);
+			}
+
+		}
+
 	}
 
 }

@@ -7,6 +7,7 @@
 	<title><?php wp_title( ' | ', true, 'right' ); ?></title>
 	<link rel="stylesheet" type="text/css" href="<?php echo get_stylesheet_uri(); ?>" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/scripts/libs/froogaloop.min.js"></script>
 	<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/scripts/slideshow.js"></script>
 	<?php wp_head(); ?>
 </head>
@@ -39,12 +40,6 @@
 
 
 			<nav id="menu" class="nav" role="navigation">
-
-			<!--
-			<div id="search">
-			<?php get_search_form(); ?>
-			</div>
-			-->
 			<?php wp_nav_menu( array( 'theme_location' => 'main-menu' ) ); ?>
 			</nav>
 
