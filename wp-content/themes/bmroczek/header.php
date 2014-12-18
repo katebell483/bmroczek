@@ -7,7 +7,7 @@
 	<title><?php wp_title( ' | ', true, 'right' ); ?></title>
 	<link rel="stylesheet" type="text/css" href="<?php echo get_stylesheet_uri(); ?>" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/scripts/libs/froogaloop.min.js"></script>
+	<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/scripts/libs/fastclick.js"></script>
 	<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/scripts/slideshow.js"></script>
 	<?php wp_head(); ?>
 </head>

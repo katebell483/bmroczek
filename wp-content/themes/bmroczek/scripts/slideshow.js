@@ -23,26 +23,11 @@ var Slideshow = {
   
 		// scale viewport
 		Slideshow.scaleViewport();
-      
-        $("body").on('mousemove', function(e) {
-            if (e.clientX < $(window).width() / 2) {
-                Slideshow.MOUSESIDE = "L";
-            } else {
-                Slideshow.MOUSESIDE = "R";
-            }
-        });
 
-        $("#content").mouseenter(function(e) {
-            if(Slideshow.MOUSESIDE === 'R') {
-                //$("body").animate({scrollLeft: $(this).width()}, 7000);
-            } else {
-                //$("body").animate({scrollLeft: 0}, 7000);
-            }
-        });
-    
-        $("#content").mouseleave(function() {
-            //$("body").stop();
-        });
+		// if ipad, add ipad styles
+		if (navigator.userAgent.match(/iPad/i)) {
+			Slideshow.addIPadstyles();     
+ 		}
 
 		// on click of post, show highlighted state
 		$(".post").click(function(e) {
@@ -72,7 +57,11 @@ var Slideshow = {
 
 		// get video thumbnails
 		Slideshow.getVideoThumbnails();
-
+		
+		// add fastclick for mobile
+		$(function() {
+			FastClick.attach(document.body);
+		});
     },
 
     sizeContainer: function() {
@@ -247,6 +236,12 @@ var Slideshow = {
 
 		}
 
+	},
+
+	addIPadstyles: function() {
+		console.log("addIPadStyles");
+		$("#container").css("overflow-y","scroll").css("-webkit-overflow-scrolling", "touch");
+		$("#content").css("overflow-y","scroll").css("-webkit-overflow-scrolling", "touch");
 	}
 
 }
