@@ -23,9 +23,6 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 
 * {
 	font-family: 'Helvetica Neue', helvetica, sans-serif !important;
-	//font-family: 'TradeGothicLTStdCnNo.18', Sans-Serif !important;
-	//font-family: helvetica, sans-serif !important;
-	//font-family: 'Futura TGW', 'Futura-Medium', Futura, Helvetica, Arial, sans-serif !important;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	-moz-box-sizing: border-box;
@@ -39,13 +36,12 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 	font-weight: 400;
 	list-style: none;
 	color: #000;
-   	//outline: 1px solid red;
 }
 
 html {
 	width: 100%;
 	height: 100%;
-	min-height: 750px;
+	min-height: 500px;
 	overflow-y: hidden;
 	position: relative;
 }
@@ -53,9 +49,10 @@ html {
 body {
 	width: 100%;
 	height: 100%;
-	min-height: 750px;
+	min-height: 350px;
 	position: relative;
 	background: #f8fdfe;
+	background: rgba(0,204,236,0.04);
 }
 
 /* HEADER */
@@ -70,22 +67,24 @@ body {
 
 #header #branding #site-title {
 	float: left;
-	margin: 60px 20px 23px 20px 
+	width: 100%;
+	padding: 35px 20px 22px 20px 
 }
 
-#header #branding #site-title h1 {
-	text-align: center
-}
-
-#header #branding #site-title h1 a, #header #branding #site-title a {
+#header #branding #site-title h1 a, #header #branding #site-title a, #site-subtitle {
 	text-decoration: none;
-	letter-spacing: 4px;
+	letter-spacing: 2px;
 	text-transform: uppercase;
 	color: #000;
-	font-size: 12px;
+	font-size: 11px;
 	font-weight: 700;
 	border-bottom: 2px solid #000;
-	padding-bottom: 2px;
+	padding-bottom: 1px;
+}
+
+#header #site-subtitle {
+	float: right;
+	margin-right: -5px;
 }
 
 #header #menu {
@@ -106,8 +105,8 @@ body {
 	float: left;
 	width: 33.33%;
 	text-align: left;
-   	letter-spacing: 5px;
-	font-size: 12px;	
+	letter-spacing: 3px;
+	font-size: 11px;	
 }
 
 .nav div .menu li:nth-child(2) {
@@ -115,7 +114,7 @@ body {
 }
 
 .nav div .menu li:last-child {
-    	text-align: right;
+		text-align: right;
 	width: auto;
 	float: right;
 	padding-right: 10px;
@@ -131,7 +130,7 @@ body {
 
 .nav div .menu a:hover {
 	font-weight: 700;	
-	//border-bottom: 2px solid #000;
+	color: red;
 }
 
 /* NAV ACTIVE STATE */
@@ -142,7 +141,7 @@ body {
 
 .current_page_item a {
 	pointer-events: none;
-	//border-bottom: 2px solid #000;
+	color: blue;
 }
 
 /* FOOTER */
@@ -154,7 +153,8 @@ body {
 	bottom: 0px;
 	width: 100%;
 	position: absolute;
-	bottom:  87px;
+	//bottom:  87px;
+	bottom:  30px;
 }
 
 #footer div {
@@ -167,29 +167,34 @@ body {
 #container {
 	position: absolute;
 	overflow: auto;
-	z-index: 10;
+	z-index: 0;
 	width: 100%;
+	height: 100%;
+}
+
+#content {
+	margin-left: 100px;
+	height: 60%;
+	width: 10000px;
+	padding-top: 35px;
+	max-height: 450px;
+	position: absolute;
 	top: 50%;
 	transform: translate(0%, -50%);
 	-webkit-transform: translate(0%, -50%);
 	-moz-transform: translate(0%, -50%);
-	height: 500px;
-}
-
-#content {
-	width: 75%; 
-	margin-left: 100px;
+	
 }
 
 .post {
 	text-align: center;
-	height: 450px;
+	height: 100%;
 	position: relative;
 	display: inline-block;	
-	margin: 25px 5px 0px 0px;	
+	margin: 0px 5px 0px 0px;	
 }
 
-.post:hover {
+.post-hover {
 	-webkit-box-shadow: 0 20px 0px rgba(255,176,164,.6);
 	-moz-box-shadow: 0 0 20px 0px rgba(255,176,164,.6);
 	box-shadow: 0 0 20px 5px rgba(255,176,164,.6);
@@ -208,6 +213,7 @@ body {
 	float: left;
 	display: block;
 	height: 100%;
+	overflow: auto;
 }
 
 .post .entry-title {
@@ -218,14 +224,15 @@ body {
 	position: relative;
 	height: 100%;
 	text-align: center;
-	overflow: hidden;
 	display: block;
+	overflow: hidden;
 }
 
 .post .entry-content p img {
-	height: 100%;
+	max-height: 100%;
 	width: auto;
 	opacity: 0;
+	position: relative;
 }
 
 .play {
@@ -240,7 +247,8 @@ body {
 }
 
 .category-video .thumbnail {
-	height: 450px;
+	max-height: 450px;
+	height: 100%;
 }
 
 .category-video:hover .play {
@@ -260,6 +268,242 @@ body {
 	transform: translate(-50%, -50%);
 	-webkit-transform: translate(-50%, -50%);
 	-moz-transform: translate(-50%, -50%);
+}
+
+/* APPOINTMENTS */
+
+.page-id-20 .nav div .menu li {
+	display: none;
+}
+
+.page-id-20 #container {
+	height: 100%;
+}
+
+.page-id-20 #content {
+	width: 100%;
+	min-width: 800px;
+	padding: 35px 80px 0px 100px;
+	margin: 0px !important;
+	height: 100%;
+
+}
+
+.post-20 {
+	height: 400px;
+	position: relative;
+	margin: 0px;	
+}
+
+.birs_appointment_location, .birs_appointment_staff, .birs_appointment_section, .birs_client_section {
+	display: none;
+}
+
+#birs_appointment_form .birs_form_field > label {
+	line-height: normal !important;
+	padding: 0 0 6px 0 !important;
+	font-weight: 400 !important;
+	letter-spacing: 1px;
+	font-size: 11px;
+	text-transform: lowercase;
+
+}
+
+#birs_appointment_form .birs_form_field {
+	padding-top: 0px !important;
+	padding-bottom: 0px !important;
+	margin-bottom: 20px !important;
+
+}
+
+#birs_client_name_first, #birs_client_name_last, #birs_client_email, #birs_client_phone {
+	height: 20px;
+}
+
+#birs_appointment_form .ui-datepicker {
+	border-radius: 0px !important;
+	border: 2px solid #000 !important;
+	cursor: pointer;
+}
+
+.ui-datepicker .ui-datepicker-title {
+	font-weight: 700 !important;
+	text-transform: lowercase;
+	letter-spacing: 1px;
+	font-size: 11px;
+}
+
+#birs_appointment_form .ui-datepicker th {
+	font-weight: 700;
+	text-transform: lowercase;
+	letter-spacing: 1px;
+	font-size: 11px;
+}
+
+#birs_appointment_form .birs_form_field textarea {
+	height: 60px !important;
+}
+
+div#birs_appointment_timeoptions a.selected {
+	background-color: transparent !important;
+	color: #000 !important;
+	font-weight: 700;
+}
+
+
+.birs_appointment_notes, .birs_client_name_first, .birs_client_name_last, .birs_client_email, .birs_client_phone {
+	width: 50%;
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+	position: absolute;
+	right: 0px;
+	display: inline-block;
+}
+
+.birs_appointment_service, .birs_appointment_date, .birs_appointment_time {
+	width: 50%;
+	padding-right: 10px !important;
+	padding-left: 0px !important;
+	position: absolute;
+	left: 0px;
+	display: inline-block;
+}
+
+.birs_appointment_service, .birs_appointment_date, .birs_appointment_time {
+	top: 0px;
+}
+
+.birs_appointment_date {
+	top: 55px;
+}
+
+.birs_appointment_time {
+	top:230px;
+}
+
+#birs_appointment_form .birs_footer {
+	position: absolute;
+	bottom: 0px;
+	right:20px;
+}
+
+#birs_book_appointment {
+	background-color: transparent !important;
+	font-size: 11px !important;
+	font-weight: 400 !important;
+	letter-spacing: 1px !important;
+	cursor: pointer;
+	text-transform: lowercase !important;
+}
+
+#birs_book_appointment:hover {
+	font-weight: 700 !important;
+}
+
+.birs_client_name_last {
+	top: 62px;
+}
+
+.birs_client_email {
+	top: 124px;
+}
+
+.birs_client_phone {
+	top: 186px;
+}
+
+.birs_appointment_notes {
+	top: 248px;
+}
+
+#birs_appointment_form .birs_field_content, #birs_appointment_form .birs_form_field select, #birs_appointment_form .ui-datepicker {
+	max-width: 95% !important;
+}
+
+div#birs_appointment_timeoptions span a {
+	font-size: 11px;
+	width: auto !important;
+	letter-spacing: 1px;
+	padding-right: 10px;
+}
+
+
+div#birs_appointment_timeoptions span a:hover {
+	font-weight: 700;
+}
+
+div#birs_appointment_timeoptions {
+	border-width: 2px !important;
+	border-style: solid !important;
+	border-left: 0px !important;
+	border-right: 0px !important;
+	border-bottom: 0px !important;
+	border-color: #000 !important;
+	padding: 10px 0px !important;
+}
+
+#birs_appointment_form .birs_field_content, #birs_appointment_form .birs_form_field select {
+	max-width: 95%;
+}
+
+div#birs_appointment_timeoptions {
+	max-width: 95%
+}
+
+#birs_appointment_datepicker .ui-state-active {
+	background-color: transparent !important;
+	font-weight: 700;
+	color: #000 !important;
+}
+
+#birs_appointment_form .ui-datepicker td span, .ui-datepicker td a {
+	font-size: 11px !important;
+	letter-spacing: 1px;
+}
+
+.ui-datepicker td a:hover {
+	font-weight: 700;
+}
+
+#birs_appointment_form .birs_form_field select {
+	font-size: 11px !important;
+	letter-spacing: 1px;
+}
+
+#birs_booking_success h3 {
+	font-size: 11px;
+	letter-spacing: 1px;
+	margin-bottom: 15px;
+
+}
+
+#birs_booking_success li {
+	width: 65%;
+	overflow: auto;
+	margin-bottom: 15px;
+}
+
+#birs_booking_success li h4 {
+	float: left;
+	margin-right: 10px;
+	text-transform: lowercase;
+	font-weight: 700;
+	letter-spacing: 1px;
+	font-size: 11px;
+}
+
+#birs_booking_success li p {
+	font-size: 11px;
+	letter-spacing: 1px;
+}
+
+#birs_appointment_form .birs_error {
+	color: red;
+	margin: 0;
+	padding: 0;
+	text-transform: lowercase;
+	letter-spacing: 1px;
+	font-size: 11px;
 }
 
 /* OVERLAY */
@@ -282,104 +526,136 @@ body {
 }
 
 .overlay .main-img, .overlay iframe {
-	height: 550px;
 	-webkit-box-shadow: 0 0 40px 20px rgba(255,176,164,.65);
 	-moz-box-shadow: 0 0 40px 20px rgba(255,176,164,.65);
 	box-shadow: 0px 0px 40px 20px rgba(255,176,164,.65);
 }
 
+.overlay .main-img {
+	height: 450px;
+}
+
+.page-id-66 .overlay .main-img {
+	display: none;
+}
+
 .overlay .exit {
 	position: absolute;
 	cursor: pointer;
-	top: -35px;
-	right: -40px;
-	width: 25px;
+	top: -25px;
+	right: -25px;
+	width: 20px;
 }
 
 .overlay h1 {
-	letter-spacing: 2.5px;
-	font-size: 12px;
+	letter-spacing: 1px;
+	font-size: 11px;
 	font-weight: 400;
-	margin-top: 15px;
+	margin-top: 0px;
+	background: red;
+	padding-left: 5px;
 	width: 65%;
-	line-height: 18px;
+	line-height: 16px;
 	text-transform: lowercase;
 }
 
+.overlay .wrapper .first-line { 
+	margin-top: 18px;
+}
 
 /* BIO */
 
-.page-id-6 #container, .page-id-22 #container, .page-id-20 #container {
-	height: auto;
+.page-id-22 #content, .page-id-6 #content {
+	padding-top: 0px;
+	padding-right: 100px;
+	width: calc(100% - 100px);
+	width: 1000px;
+	overflow: hide;
+}
 
+.page-id-6 #content {
+	height: auto;
+	padding-top: 30px;
 }
 
 .page-id-6 .page .entry-title, .page-id-22 .page .entry-title, .page-id-20 .page .entry-title {
 	display: none;
 }
 
-.page-id-6 .page p, .page-id-22 .page p, .page-id-20 .page p {
+.page-id-6 .page p, .page-id-22 .page p {
 	opacity: 0;
-	letter-spacing: 2.5px;
-	font-size: 12px;
+	letter-spacing: 1px;
+	font-size: 11px;
 	font-weight: 400;
-	margin-top: 15px;
-	width: 80%;
+	margin-top: 5px;
 	line-height: 18px;
 	padding-bottom: 5px;
 }
 
-/* MOBILE .. TEMP !*/
-@media screen and (max-width: 400px) {
+.page-id-22 .entry-content {
+	position: absolute;	
+	top: 50%;
+	-webkit-transform: translate(0%, -50%)
+}
 
-	html, body {
+/* MOBILE .. TEMP !*/
+@media screen and (max-width: 700px) {
+
+	html, #mobile {
 		min-width: 100%;
 		min-height: 100%;
 	}
 
-	#header {
+	#mobile #header {
 		min-width: 100%;
+		position: fixed;
+		z-index: 100;
 	}
 
-	#header #branding #site-title {
-		margin: 40px 20px 20px 20px;
+	#mobile #header #branding #site-title {
+		margin: 36px 20px 22px 20px;
+		padding: 0px !important;
 	}
 
-	.nav div .menu li {
+	#mobile .nav div .menu li {
 		width: auto;
 		padding-right: 10px;
 	}
 
-	#footer {
+	#mobile #footer {
 		min-width: 100%;
-		top: 105px;
+		top: 103px;
+		position: fixed;
+		z-index: 100;
+		height: 20px;
 	}
 
-	.overlay .wrapper {
+	#mobile .overlay .wrapper {
 		width: 100% !Important;	
 		padding: 0px 10px;
 		margin-top: 200px;
 	}
 
-	.overlay .wrapper .main-img {
+	#mobile .overlay .wrapper .main-img {
 		width: 100%;
 		height: auto;
 
 	}
 
-	.overlay .wrapper .exit {
+	#mobile .overlay .wrapper .exit {
 		right: 20px;
 		top: -20px;
 		width: 16px;
 	}
-	.category-video:hover .play {
+
+	#mobile .category-video:hover .play {
 		display: none !important;
 	}
 	
-	#container {
+	#mobile #container {
 		height: inherit;
-		height: inherit;
-		top: 135px;
+		top: 145px;
+		padding-right: 20px;
 		transform: translate(0%, 0%);
 		-webkit-transform: translate(0%, 0%);
 		-moz-transform: translate(0%, 0%);
@@ -387,39 +663,68 @@ body {
 		-webkit-overflow-scrolling: touch !important;
 	}
 
-	#content {
-		width: 100% !important;
-		margin-left: 0px;
-		overflow-y: scroll !important; /* has to be scroll, not auto */
-		-webkit-overflow-scrolling: touch !important;
+	#mobile.home #container, #mobile.page-id-66 #container {
+		top: 135px;
 	}
 
-	.post {
+	#mobile #content {
+		width: 100% !important;
+		margin-left: 0px;
+		padding-top: 0px;
+		overflow-y: scroll !important; /* has to be scroll, not auto */
+		-webkit-overflow-scrolling: touch !important;
+		height: initial !important;
+		max-height: none !important;
+		position: relative !important;
+		transform: translate(0%, 0%);
+		-webkit-transform: translate(0%, 0%);
+		-moz-transform: translate(0%, 0%);
+	}
+
+	#mobile .post {
 		display: block !important;
 		padding: 0px;
 		height: auto !important;
-		width: calc(100% - 40px);
+		width: calc(100% - 20px);
 		margin: 20px;
 	}
 
-	.home .post {
+	#mobile.home .post {
 		overflow: auto;
 	}
 	
-	.post p img, .category-video .thumbnail {
+	#mobile .post p img, #mobile .category-video .thumbnail {
 		height: auto !important;
 		width: 100% !important;
 	}
-	
-	.category-video iframe {
-		margin-bottom: -2px;
+
+	#mobile.page-id-6 #content, #mobile.page-id-22 #content {
+		padding: 0px 0px 0px 20px;
+	}
+
+	#mobile.page-id-22 #content {
+		min-height: 130px;
+	}
+
+	#mobile .page-id-22 .entry-content {
+		position: relative;	
+		-webkit-transform: translate(0%, 0%)
+	}
+
+	#mobile .category-video iframe {
+		//margin-bottom: -2px;
+		top: 0px;
+		position: absolute;
+		left: 0px;
+		//z-index: -2;
 	}
 			
-	.home .post:hover h1 {
-		display: block;
+	#mobile.home .post:hover h1 {
+		display: none;
+		/*
 		background: rgba(255,176,164,.65);
-		letter-spacing: 2.5px;
-		font-size: 12px;
+		letter-spacing: 1px;
+		font-size: 11px;
 		font-weight: 400;
 		padding: 12px 0px 10px 0px;
 		width: 100%;
@@ -434,9 +739,10 @@ body {
 		-webkit-transition: box-shadow .3s;
 		-moz-transition: box-shadow .3s;
 		transition: box-shadow .3s;
+		*/
 	}
 
-	.home .overlay .wrapper {
+	#mobile.home .overlay .wrapper {
 		top: 40px;
 		left: 0px;
 		margin-top: 0px;
@@ -447,7 +753,7 @@ body {
 
 	}
 	
-	.overlay .main-img {
+	#mobile .overlay .main-img {
 		height: auto !important;
 		width: auto !important;
 		max-height: 75% !important;
@@ -455,47 +761,103 @@ body {
 		margin-top: 20px !important;
 	}
 
-	.overlay h1 {
+	#mobile .overlay h1 {
 		width: 100%;
 		padding: 0px 20px;
 	}
 
-	.overlay .main-img, .overlay iframe {
+	#mobile .overlay .main-img, #mobile .overlay iframe {
 		height: auto;
 		margin: 0 auto;
 		display: block;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
 	}
 
-	.page-id-22 .entry-content, .page-id-20 .entry-content, .page-id-6 .entry-content {
-		padding: 0px 0px 20px 20px;
+	#mobile .page-id-22 .entry-content, #mobile .page-id-20 .entry-content, #mobile .page-id-6 .entry-content {
+		padding: 0px 20px 20px 20px;
 	}
 	
-	.nav div .menu li:last-child {
+	#mobile .nav div .menu li:last-child {
 		text-align: right;
 		float: left;
 		padding-right: 10px;
 	}
 
-	.nav div .menu li a {
+	#mobile .nav div .menu li a {
 		padding: 0px 0px 1px 3px
 	}
 
-	.nav div .menu a:hover {
+	#mobile .nav div .menu a:hover {
 		font-weight: 700;	
-		//border-bottom: 0px solid #000;
 	}
+
+	#mobile.page-id-20 #container {
+		top: 65px;
+		height: 800px;
+		width: 100%;
+		padding-right: 0px;
+		overflow: auto !important;	
+	}
+
+	#mobile.page-id-20 #content {
+		min-width: 100%;
+		padding: 20px 0px 20px 20px;
+		top: 0px;
+		height: 100% !important;
+		//overflow: auto !important;
+	}
+
+	#mobile #birs_appointment_form ul li {
+		position: relative;
+		width: 100%;
+		top: inherit;
+		padding: 0px;
+
+	}
+
+	#mobile #birs_appointment_form .birs_field_content, #mobile #birs_appointment_form .birs_form_field select, #mobile #birs_appointment_form .ui-datepicker {
+		max-width: 100% !important;
+	}
+
+	#mobile #birs_appointment_form .birs_footer {
+		text-align: center;
+		padding-left: 40px;
+		margin-bottom: 100px;
+
+	}
+
+	#mobile.page-id-20 #header {
+		position: absolute;
+	}	
 
 }
 
 
 /* MOBILE .. LANDSCAPE SPECIFIC... TBD !*/
-@media screen and (max-width: 400px) and (orientation: landscape) {
-	.overlay .main-img {
+@media screen and (max-width: 700px) and (orientation: landscape) {
+	/*
+	#mobile  .overlay .main-img {
 		height: auto !important;
 		width: auto !important;
 		max-height: 75% !important;
 		max-width: 100% !important;
 		margin-top: 0px !important;
+	}
+	*/
+	#mobile.home .post {
+		width: 100%;
+		padding-left: 26%;
+	}
+
+	#mobile.home .post .entry-content, #mobile.page-id-66 .post .thumbnail {
+		width: 60% !important;
+		height: auto;
+	}
+
+	#mobile.page-id-66 .post iframe {
+		left: 20%;
 	}
 
 }

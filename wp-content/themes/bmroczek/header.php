@@ -3,11 +3,13 @@
 
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>" />
-	<meta name="viewport" content="width=device-width" />
+	<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
 	<title><?php wp_title( ' | ', true, 'right' ); ?></title>
 	<link rel="stylesheet" type="text/css" href="<?php echo get_stylesheet_uri(); ?>" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/scripts/libs/jquery.color-2.1.2.js"></script>
 	<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/scripts/libs/fastclick.js"></script>
+	<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/scripts/libs/froogaloop.min.js"></script>
 	<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/scripts/slideshow.js"></script>
 	<?php wp_head(); ?>
 </head>
@@ -18,7 +20,6 @@
 		<div class="wrapper">
 			<img class="main-img" src=''/>
 			<img class="exit" src="<?php bloginfo('template_url'); ?>/img/exit.png"/>
-			<h1 class="overlay-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h1>
 		</div>
 	</div>
 
@@ -32,6 +33,7 @@
 					<?php if ( ! is_singular() ) { echo '<h1>'; } ?>
 					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php esc_attr_e( get_bloginfo( 'name' ), 'blankslate' ); ?>" rel="home"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></a>
 					<?php if ( ! is_singular() ) { echo '</h1>'; } ?>
+					<!--<h1 id="site-subtitle">hair stylist</h1>-->
 				</div>
 				
 				<!--<div id="site-description"><?php bloginfo( 'description' ); ?></div>-->
