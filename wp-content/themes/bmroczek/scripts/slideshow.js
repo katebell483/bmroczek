@@ -19,7 +19,9 @@ var Slideshow = {
 
 		// and on resize.. 
 		$(window).resize(function() {
-			Slideshow.resizeContainer();
+			if(!navigator.userAgent.match(/iPad/i)) {
+				Slideshow.resizeContainer();
+			}
 		});
  
 		// scale viewport
@@ -148,17 +150,17 @@ var Slideshow = {
 
         $("body .post").each(function(index) {
 		
-				var img = $(this).find("img:not(.play)");
+			var img = $(this).find("img:not(.play)");
 
-				var natImage = new Image();
-				natImage.src = img.attr("src");
+			var natImage = new Image();
+			natImage.src = img.attr("src");
 
-				var newWidth = (natImage.naturalWidth/natImage.naturalHeight) * img.height();
-				img.width(newWidth);
-	
-                totalWidth += newWidth + 10;
-                $("#content").width(totalWidth);
-				$(this).fadeTo(600 , 1);
+			var newWidth = (natImage.naturalWidth/natImage.naturalHeight) * img.height();
+			img.width(newWidth);
+
+			totalWidth += newWidth + 10;
+			$("#content").width(totalWidth);
+			$(this).fadeTo(600 , 1);
         });
     },
 

@@ -506,6 +506,17 @@ div#birs_appointment_timeoptions {
 	font-size: 11px;
 }
 
+.avail-text {
+	position: absolute;
+	bottom: -40px;
+	right: 10px;
+	letter-spacing: 1px;
+	font-size: 11px;
+	width: 100%;
+	text-align: center;
+}
+
+
 /* OVERLAY */
 .overlay {
 	position: fixed;
