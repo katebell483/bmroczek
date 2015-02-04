@@ -134,17 +134,22 @@ var Slideshow = {
 		// size hompage 
         $(".home .post").each(function(index) {
             $(this).find("img").load(function() {
-		
-				var img = $(this);	
-				var natImage = new Image();
-				natImage.src = img.attr("src");
 
-				var newWidth = (natImage.naturalWidth/natImage.naturalHeight) * img.height();
-				img.width(newWidth);
-                
-				// build size of container
-				totalWidth += newWidth + 5;
-			
+
+				if(navigator.userAgent.match(/iPad/i)) {
+					totalWidth += parseInt($(this).width(), 10) + 5;
+				} else {	
+					var img = $(this);	
+					var natImage = new Image();
+					natImage.src = img.attr("src");
+
+					var newWidth = (natImage.naturalWidth/natImage.naturalHeight) * img.height();
+					img.width(newWidth);
+					
+					// build size of container
+					totalWidth += newWidth + 5;
+				}		
+	
 				// fade in img
 				$(this).fadeTo(600 , 1);
 				
@@ -336,7 +341,8 @@ var Slideshow = {
 			id = id.trim();
 			
 			if($.isNumeric(id)) {
-				
+			
+				console.log(dataUrl);	
 				$.getJSON(dataUrl, function(result) {
 
 					// get thumbnail
@@ -344,9 +350,12 @@ var Slideshow = {
 					
 					// calc new width based on old aspect ratio
 					var width = (parseInt(result[0]["width"], 10) / parseInt(result[0]["height"], 10)) * curPost.height();  
-				
-					curPost.width(width);
-	
+		
+					// width is always 100% on phone	
+					if(!navigator.userAgent.match(/iPhone/i)) {
+						//curPost.width(width);
+					}
+
 					// prepend thumbnail
 					curPost.prepend('<img class="thumbnail" src=' + src +' />');
 					
@@ -356,7 +365,9 @@ var Slideshow = {
 					// add adjusted width to container
 					totalWidth += width + 15;
 					console.log(totalWidth);
-					$("#content").width(totalWidth);
+					
+					// this is totally hacky fix it.. 	
+					if(totalWidth > 3356) $("#content").width(totalWidth);
 
 					// add hover states after loaded 
 					if(!navigator.userAgent.match(/iPhone/i)) {
