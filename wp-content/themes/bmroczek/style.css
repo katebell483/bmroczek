@@ -68,7 +68,7 @@ body {
 #header #branding #site-title {
 	float: left;
 	width: 100%;
-	padding: 35px 20px 22px 20px 
+	padding: 35px 20px 18px 20px 
 }
 
 #header #branding #site-title h1 a, #header #branding #site-title a, #site-subtitle {
@@ -83,8 +83,9 @@ body {
 }
 
 #header #site-subtitle {
-	float: right;
-	margin-right: -5px;
+	text-transform: lowercase;
+	border-bottom: none;
+	padding-top: 4px;
 }
 
 #header #menu {
@@ -173,17 +174,17 @@ body {
 }
 
 #content {
-	margin-left: 100px;
 	height: 60%;
 	width: 10000px;
-	padding-top: 35px;
 	max-height: 450px;
 	position: absolute;
 	top: 50%;
 	transform: translate(0%, -50%);
 	-webkit-transform: translate(0%, -50%);
 	-moz-transform: translate(0%, -50%);
-	
+	overflow: hidden;
+	padding: 35px 0px 20px 20px;
+	margin: 15px 0px 0px 80px;
 }
 
 .post {
@@ -192,6 +193,10 @@ body {
 	position: relative;
 	display: inline-block;	
 	margin: 0px 5px 0px 0px;	
+}
+
+.home .post, .page-id-66 .post {
+	margin-bottom: 20px;
 }
 
 .post-hover {
@@ -214,6 +219,7 @@ body {
 	display: block;
 	height: 100%;
 	overflow: auto;
+	margin-top: -1px;
 }
 
 .post .entry-title {
@@ -278,6 +284,7 @@ body {
 
 .page-id-20 #container {
 	height: 100%;
+	min-height: 550px;
 }
 
 .page-id-20 #content {
@@ -286,6 +293,7 @@ body {
 	padding: 35px 80px 0px 100px;
 	margin: 0px !important;
 	height: 100%;
+	overflow: visible;
 
 }
 
@@ -536,6 +544,10 @@ div#birs_appointment_timeoptions {
 	-moz-transform: translate(-50%, -50%);
 }
 
+.page-id-66 .overlay .wrapper {
+	top: 47%;
+}
+
 .overlay .main-img, .overlay iframe {
 	-webkit-box-shadow: 0 0 40px 20px rgba(255,176,164,.65);
 	-moz-box-shadow: 0 0 40px 20px rgba(255,176,164,.65);
@@ -580,7 +592,7 @@ div#birs_appointment_timeoptions {
 	padding-top: 0px;
 	padding-right: 100px;
 	width: calc(100% - 100px);
-	width: 1000px;
+	min-width: 650px;
 	overflow: hide;
 }
 
@@ -615,6 +627,7 @@ div#birs_appointment_timeoptions {
 	html, #mobile {
 		min-width: 100%;
 		min-height: 100%;
+		-webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */
 	}
 
 	#mobile #header {
@@ -624,10 +637,13 @@ div#birs_appointment_timeoptions {
 	}
 
 	#mobile #header #branding #site-title {
-		margin: 36px 20px 22px 20px;
+		margin: 36px 20px 15px 20px;
 		padding: 0px !important;
 	}
 
+	#mobile #header #branding #site-subtitle {
+		padding-top: 6px;
+	}
 	#mobile .nav div .menu li {
 		width: auto;
 		padding-right: 10px;
@@ -635,7 +651,7 @@ div#birs_appointment_timeoptions {
 
 	#mobile #footer {
 		min-width: 100%;
-		top: 103px;
+		top: 114px;
 		position: fixed;
 		z-index: 100;
 		height: 20px;
@@ -675,13 +691,14 @@ div#birs_appointment_timeoptions {
 	}
 
 	#mobile.home #container, #mobile.page-id-66 #container {
-		top: 135px;
+		top: 130px;
 	}
 
 	#mobile #content {
 		width: 100% !important;
 		margin-left: 0px;
 		padding-top: 0px;
+		padding-left: 0px;
 		overflow-y: scroll !important; /* has to be scroll, not auto */
 		-webkit-overflow-scrolling: touch !important;
 		height: initial !important;
@@ -710,7 +727,8 @@ div#birs_appointment_timeoptions {
 	}
 
 	#mobile.page-id-6 #content, #mobile.page-id-22 #content {
-		padding: 0px 0px 0px 20px;
+		padding: 0px 0px 60px 20px;
+		min-width: inherit;
 	}
 
 	#mobile.page-id-22 #content {
@@ -804,9 +822,14 @@ div#birs_appointment_timeoptions {
 		font-weight: 700;	
 	}
 
+	#mobile.page-id-20 {
+		overflow: hidden;
+		height: 1100px;
+	}
+
 	#mobile.page-id-20 #container {
-		top: 65px;
-		height: 800px;
+		top: 80px;
+		height: 100%;
 		width: 100%;
 		padding-right: 0px;
 		overflow: auto !important;	
@@ -817,7 +840,7 @@ div#birs_appointment_timeoptions {
 		padding: 20px 0px 20px 20px;
 		top: 0px;
 		height: 100% !important;
-		//overflow: auto !important;
+		overflow-y: hidden !important;
 	}
 
 	#mobile #birs_appointment_form ul li {
@@ -829,14 +852,20 @@ div#birs_appointment_timeoptions {
 	}
 
 	#mobile #birs_appointment_form .birs_field_content, #mobile #birs_appointment_form .birs_form_field select, #mobile #birs_appointment_form .ui-datepicker {
-		max-width: 100% !important;
+		//max-width: 100% !important;
 	}
 
 	#mobile #birs_appointment_form .birs_footer {
 		text-align: center;
 		padding-left: 40px;
-		margin-bottom: 100px;
+		margin-bottom: 0px;
 
+	}
+	
+	#mobile .avail-text {
+		position: relative;
+		margin-bottom: 100px;
+		line-height: 18px;
 	}
 
 	#mobile.page-id-20 #header {
@@ -848,15 +877,6 @@ div#birs_appointment_timeoptions {
 
 /* MOBILE .. LANDSCAPE SPECIFIC... TBD !*/
 @media screen and (max-width: 700px) and (orientation: landscape) {
-	/*
-	#mobile  .overlay .main-img {
-		height: auto !important;
-		width: auto !important;
-		max-height: 75% !important;
-		max-width: 100% !important;
-		margin-top: 0px !important;
-	}
-	*/
 	#mobile.home .post {
 		width: 100%;
 		padding-left: 26%;
@@ -872,3 +892,28 @@ div#birs_appointment_timeoptions {
 	}
 
 }
+
+/* IPAD SPECIFIC CSS */
+#ipad #container {
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+}
+
+#ipad #content {
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+}
+
+#ipad.page-id-20 #content {
+	overflow-y: visible !important;
+}
+
+#ipad .avail-text {
+	bottom: -90px;
+}
+
+#ipad #site-subtitle {
+	padding-top: 6px;
+}
+
+

@@ -29,7 +29,7 @@ var Slideshow = {
 
 		// if ipad, add ipad styles
 		if (navigator.userAgent.match(/iPad/i)) {
-			Slideshow.addIPadstyles();     
+			$("body").attr("id", "ipad");
 		}
 
 		// if iphone, add mobile styles 
@@ -37,12 +37,27 @@ var Slideshow = {
 			$("body").attr("id", "mobile"); 
 		}
 
-		// on mobile film hide iframe on orientation change
+		// on mobile film hide iframe on orientation change, on ipad adjust container size for orientation scaling
 		$(window).on("orientationchange", function(event) {
+
 			if(navigator.userAgent.match(/iPhone/i)) {
 				$("iframe").remove();	
 				$(".thumbnail").show().css("opacity", 1).css("pointer-events", "inherit");
 			}
+
+			if(navigator.userAgent.match(/iPad/i)) {
+
+				container = $(".home #content, .page-id-66 #content");
+				curWidth = container.width();
+
+				if(Math.abs(this.orientation) === 0 || Math.abs(this.orientation) === 180) {
+					newWidth = curWidth * 1.07;
+				} else {
+					newWidth = curWidth * .935;
+				}
+
+				container.width(newWidth);
+			}	
 		});
 
 		// on click of post, show highlighted state
@@ -54,6 +69,7 @@ var Slideshow = {
 		$(".exit").click(function() {
 			$(".overlay").fadeOut(100);
 			$(".overlay").find("iframe").remove();
+			$(".page-id-66 .overlay").find("h1").remove();
 		});
 	
 		// fade in bio page
@@ -118,9 +134,16 @@ var Slideshow = {
 		// size hompage 
         $(".home .post").each(function(index) {
             $(this).find("img").load(function() {
+		
+				var img = $(this);	
+				var natImage = new Image();
+				natImage.src = img.attr("src");
+
+				var newWidth = (natImage.naturalWidth/natImage.naturalHeight) * img.height();
+				img.width(newWidth);
                 
 				// build size of container
-				totalWidth += parseInt($(this).width(), 10) + 5;
+				totalWidth += newWidth + 5;
 			
 				// fade in img
 				$(this).fadeTo(600 , 1);
@@ -138,7 +161,6 @@ var Slideshow = {
 		// wait until all of page is loaded before sizing container
 		$(window).load(function() {
 			$(".home #content").width(totalWidth);
-			//$(".page-id-66 #content").width(totalWidth);
 		});
     },
     
@@ -316,12 +338,15 @@ var Slideshow = {
 			if($.isNumeric(id)) {
 				
 				$.getJSON(dataUrl, function(result) {
+
 					// get thumbnail
 					var src = result[0]["thumbnail_large"];
 					
 					// calc new width based on old aspect ratio
 					var width = (parseInt(result[0]["width"], 10) / parseInt(result[0]["height"], 10)) * curPost.height();  
-					
+				
+					curPost.width(width);
+	
 					// prepend thumbnail
 					curPost.prepend('<img class="thumbnail" src=' + src +' />');
 					

@@ -33,10 +33,9 @@
 					<?php if ( ! is_singular() ) { echo '<h1>'; } ?>
 					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php esc_attr_e( get_bloginfo( 'name' ), 'blankslate' ); ?>" rel="home"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></a>
 					<?php if ( ! is_singular() ) { echo '</h1>'; } ?>
-					<!--<h1 id="site-subtitle">hair stylist</h1>-->
+					<h1 id="site-subtitle">hair stylist</h1>
 				</div>
 				
-				<!--<div id="site-description"><?php bloginfo( 'description' ); ?></div>-->
 
 			</section>
 
