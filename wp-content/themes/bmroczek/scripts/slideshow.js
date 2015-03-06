@@ -1,8 +1,13 @@
 var Slideshow = {
 
-    DEBUG: true,
+    DEBUG: false,
     
     COLOR_INDEX: 0,
+
+	SCROLL_TIMER_DELAY: 250,
+
+	SCROLL_TIMER_RIGHT: "",
+	SCROLL_TIMER_LEFT: "",
 
     init: function() {
         console.log("Slideshow.init()");
@@ -98,32 +103,177 @@ var Slideshow = {
 			FastClick.attach(document.body);
 		});
 
-		// scroll with arrows
-        $(document).keydown(function(e) {
+		// attach auto scroll mechanisms for desktop
+		if(!navigator.userAgent.match(/iPhone/i) && !navigator.userAgent.match(/iPad/i)) {
+			Slideshow.attachAutoScroll();
+		}
 
-			var speedL = $("#container").scrollLeft() > 0 ? ($("#container").scrollLeft() * 5000)/$("#content").width() : 6000;
-			var speedR = $("#container").scrollLeft() > 0 ? (($("#content").width() - $("#container").scrollLeft()) * 6000)/$("#content").width() : 5000;
+    },
 
-			switch(e.which) {
-        		case 39: // left
-					$("#container").animate({scrollLeft: $("#content").width()}, speedR);
-					break;
+	attachAutoScroll: function() {
+		console.log("attachAutoScroll()");
 
-				case 37: // right
-					$("#container").animate({scrollLeft: 0}, speedL);
-					break;
+		// only porftolio + film pages get the auto scroll
+		var scrollContainers = $(".home #container, .page-id-66 #container");	
+		
+		// calc speeds
+		var speedR = $("#container").scrollLeft() > 0 ? (($("#content").width() - $("#container").scrollLeft()) * 6000)/$("#content").width() : 6000,
+			speedL = $("#container").scrollLeft() > 0 ? ($("#container").scrollLeft() * 4000)/$("#content").width() : 4000;
+	
+		// shortcut	
+		target = scrollContainers;
 
-				default: return; // exit this handler for other keys
+		// init var for keydown event state
+		var keyEvent = false;
+
+		// scroll with position
+		scrollContainers.mousemove(function(e) {
+		
+			// clear any animations already built up
+			clearTimeout(Slideshow.SCROLL_TIMER_LEFT);
+			clearTimeout(Slideshow.SCROLL_TIMER_RIGHT);
+			
+			// calculate proper srolling speeds + offsets
+			offset = target.offset(),
+			posHoriz = e.pageX - offset.left,
+			posTop = e.pageY - offset.top,
+			topOffset = $(document).height() * .2,
+			bottomOffset = $(document).height() * .8,
+			docWidth = $(document).width();
+
+			// mouse on far right
+			if(posHoriz >=  docWidth - 75 && posTop > topOffset + 100 && posTop < bottomOffset) {
+				
+				// don't attach scroll styles if at the end of scroll already..
+				var max = target[0].scrollWidth - target.parent().width()	
+				if(target.scrollLeft() == max) return;
+
+
+				// call scroll right with slight delay
+				Slideshow.SCROLL_TIMER_RIGHT = setTimeout(function() {
+					Slideshow.autoScrollRight(target, speedR) 
+				}, Slideshow.SCROLL_TIMER_DELAY);
+
+			// mouse pm far left
+			} else if(posHoriz <= 75 && posTop > topOffset + 100 && posTop < bottomOffset) {
+		
+				// don't attach scroll styles if at the end of scroll already..
+				if($("#container").scrollLeft() == 0) return;
+
+				// call scroll right with slight delay
+				Slideshow.SCROLL_TIMER_LEFT = setTimeout(function() {
+					Slideshow.autoScrollLeft(target, speedL) 
+				}, Slideshow.SCROLL_TIMER_DELAY);
+	
+			} else {
+
+				// don't stop auto scroll by arrows
+				if(keyEvent) return;
+
+				// stop scroll 
+				target.stop(true) 
+
+				// restore original styles
+				$("#content").css("cursor", "pointer");
+				$(".post").css("pointer-events", "inherit");
 			}
 
-			e.preventDefault(); // prevent the default action (scroll / move caret)
+		});
+
+		// scroll with arrows
+        $(document).keydown(function(e) {
+			
+			// clear any other scrolling
+			clearTimeout(Slideshow.SCROLL_TIMER_LEFT);
+			clearTimeout(Slideshow.SCROLL_TIMER_RIGHT);
+
+			// don't scroll if already scrolling
+			if(!keyEvent) {
+
+				// switch key state to true
+				keyEvent = true;
+
+				// detect left and right arrow keys
+				switch(e.which) {
+					case 39: 
+						Slideshow.autoScrollRight(target, speedR) 
+						break;
+
+					case 37:
+						Slideshow.autoScrollLeft(target, speedL) 
+						break;
+
+					default: 
+						// exit this handler for other keys
+						return; 
+				}
+			}
+ 			
+			// prevent the default action
+			e.preventDefault();
         });
     
 		// stop scroll on keup
         $(document).keyup(function() {
-            $("#container").stop(true);
+
+			// update state of arrow scroll to false
+			keyEvent = false;
+
+			// stop scroll
+            scrollContainers.stop(true);
+		
+			// re-attach post hovers
+			$(".post").css("pointer-events", "inherit");
+			
+			// stop any built up animations
+			clearTimeout(Slideshow.SCROLL_TIMER_LEFT);
+			clearTimeout(Slideshow.SCROLL_TIMER_RIGHT);
         });
-    },
+
+		// stop scroll on window exit
+        $("#container").mouseleave(function() {
+
+			// stop scroll
+            scrollContainers.stop(true);
+		
+			// stop any built up animations
+			clearTimeout(Slideshow.SCROLL_TIMER_LEFT);
+			clearTimeout(Slideshow.SCROLL_TIMER_RIGHT);
+        });
+
+	},
+
+	autoScrollRight: function(target, speed) {
+		console.log("autoScrollRight()")
+	
+		// if already animating, don't re-trigger animation	
+		if(target.is(':animated')) return;
+
+		// animate scroll	
+		target.animate({scrollLeft: $("#content").width()}, speed, 'swing', function() {
+			$("#content").css("cursor", "inherit");
+		});
+
+		// scroll styles
+		$(".post").css("pointer-events", "none");
+		$("#content").css("cursor", "e-resize");
+	},
+		
+	autoScrollLeft: function(target, speed) {
+		console.log("autoScrollLeft()")
+
+		// if already animating, don't re-trigger animation	
+		if(target.is(':animated')) return;
+
+		// animate scroll
+		target.animate({scrollLeft: 0}, speed, 'swing', function() {
+            $("#content").css("cursor", "inherit");
+        });
+		
+		// scroll styles
+		$(".post").css("pointer-events", "none");
+		$("#content").css("cursor", "w-resize");
+	},
 
     sizeContainer: function() {
         console.log("Slideshow.sizeContainer()");
@@ -157,6 +307,7 @@ var Slideshow = {
 					// add hover states after loaded + if not iphone
 					$(this).bind( "mouseenter mouseleave", function() {
 						$(this).parent().parent().parent().toggleClass( "post-hover" );
+
 					});
 				}
 
@@ -350,10 +501,9 @@ var Slideshow = {
 					
 					// calc new width based on old aspect ratio
 					var width = (parseInt(result[0]["width"], 10) / parseInt(result[0]["height"], 10)) * curPost.height();  
-		
-					// width is always 100% on phone	
-					if(!navigator.userAgent.match(/iPhone/i)) {
-						//curPost.width(width);
+					// this is really for firefox	.. prob better solution out there
+					if(!navigator.userAgent.match(/iPhone/i) || !navigator.userAgent.match(/iPad/i)) {
+						curPost.width(width);
 					}
 
 					// prepend thumbnail
