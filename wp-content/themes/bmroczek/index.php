@@ -2,7 +2,7 @@
 <section id="content" role="main">
 <?php
 	if (is_home()) {
-		query_posts("cat=-4");
+		query_posts("cat=-6");
 	}
 ?>
 

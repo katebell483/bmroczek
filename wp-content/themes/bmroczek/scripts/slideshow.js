@@ -1,6 +1,6 @@
 var Slideshow = {
 
-    DEBUG: false,
+    DEBUG: true,
     
     COLOR_INDEX: 0,
 
@@ -20,7 +20,9 @@ var Slideshow = {
         };
 
         // size container
-        Slideshow.sizeContainer();
+		$(document).ready(function() {
+			Slideshow.sizeContainer();
+		});
 
 		// and on resize.. 
 		$(window).resize(function() {
@@ -52,7 +54,7 @@ var Slideshow = {
 
 			if(navigator.userAgent.match(/iPad/i)) {
 
-				container = $(".home #content, .page-id-66 #content");
+				container = $(".home #content, .page-id-17 #content");
 				curWidth = container.width();
 
 				if(Math.abs(this.orientation) === 0 || Math.abs(this.orientation) === 180) {
@@ -74,7 +76,7 @@ var Slideshow = {
 		$(".exit").click(function() {
 			$(".overlay").fadeOut(100);
 			$(".overlay").find("iframe").remove();
-			$(".page-id-66 .overlay").find("h1").remove();
+			$(".page-id-17 .overlay").find("h1").remove();
 		});
 	
 		// fade in bio page
@@ -83,7 +85,7 @@ var Slideshow = {
         });
 		
 		// fade in contact page
-		$(".page-id-22 p").each(function(index) {
+		$(".page-id-8 p").each(function(index) {
 			$(this).fadeTo(300 , 1);
         });
 		
@@ -114,7 +116,7 @@ var Slideshow = {
 		console.log("attachAutoScroll()");
 
 		// only porftolio + film pages get the auto scroll
-		var scrollContainers = $(".home #container, .page-id-66 #container");	
+		var scrollContainers = $(".home #container, .page-id-17 #container");	
 		
 		// calc speeds
 		var speedR = $("#container").scrollLeft() > 0 ? (($("#content").width() - $("#container").scrollLeft()) * 6000)/$("#content").width() : 6000,
@@ -283,36 +285,48 @@ var Slideshow = {
 
 		// size hompage 
         $(".home .post").each(function(index) {
-            $(this).find("img").load(function() {
-
-
-				if(navigator.userAgent.match(/iPad/i)) {
-					totalWidth += parseInt($(this).width(), 10) + 5;
-				} else {	
-					var img = $(this);	
-					var natImage = new Image();
-					natImage.src = img.attr("src");
-
+			
+			var img = $(this).find("img");	
+        
+            // definitely need to clean this up. just not touching for a min so dont fuck it up while someone looking
+			if(navigator.userAgent.match(/iPad/i)) {
+				var natImage = new Image();
+				natImage.src = img.attr("src");
+				
+				natImage.onload = function() {	
+				    totalWidth += parseInt(img.width(), 10) + 10;
+                }
+			} else {	
+				var natImage = new Image();
+				natImage.src = img.attr("src");
+				
+				natImage.onload = function() {	
 					var newWidth = (natImage.naturalWidth/natImage.naturalHeight) * img.height();
 					img.width(newWidth);
-					
+						
+					console.log(natImage.src);
+					console.log(img.height());
+					console.log(natImage.naturalWidth);
+					console.log(natImage.naturalHeight);
+		
 					// build size of container
-					totalWidth += newWidth + 5;
-				}		
-	
-				// fade in img
-				$(this).fadeTo(600 , 1);
-				
-				if(!navigator.userAgent.match(/iPhone/i)) {
-					// add hover states after loaded + if not iphone
-					$(this).bind( "mouseenter mouseleave", function() {
-						$(this).parent().parent().parent().toggleClass( "post-hover" );
-
-					});
+					totalWidth += newWidth + 10;
+					console.log(totalWidth);
 				}
+			}		
 
-            });
-        });
+			// fade in img
+			img.fadeTo(600 , 1);
+			
+			if(!navigator.userAgent.match(/iPhone/i)) {
+				// add hover states after loaded + if not iphone
+				img.bind( "mouseenter mouseleave", function() {
+					img.parent().parent().parent().toggleClass( "post-hover" );
+
+				});
+			}
+
+		});
 
 		// wait until all of page is loaded before sizing container
 		$(window).load(function() {
@@ -366,13 +380,14 @@ var Slideshow = {
 	showPhoneDetail: function(target) {
 		console.log("showPhoneDetail");
 
-		film = target.parent().hasClass("category-video"),
+		film = target.parent().hasClass("category-film"),
 		title = target.parent().parent().siblings("h1").text();
 		
 		// check if iframe already attached
 		if($(target).attr("id") == "player1") return;	
 	
 		if(film) {
+            console.log("HEY!");
 
 			// remove existing iframes and add any missing thumbnails		
 			$("iframe").remove();	
@@ -484,7 +499,7 @@ var Slideshow = {
 
 		var totalWidth = 0;
 
-		$(".page-id-66 .post").each(function() {
+		$(".page-id-17 .post").each(function() {
 			var curPost = $(this),
 				id = curPost.find(".entry-content p").text(),
 				dataUrl = "http://vimeo.com/api/v2/video/" + id + ".json";
@@ -502,7 +517,7 @@ var Slideshow = {
 					// calc new width based on old aspect ratio
 					var width = (parseInt(result[0]["width"], 10) / parseInt(result[0]["height"], 10)) * curPost.height();  
 					// this is really for firefox	.. prob better solution out there
-					if(!navigator.userAgent.match(/iPhone/i) || !navigator.userAgent.match(/iPad/i)) {
+					if(!navigator.userAgent.match(/iPhone/i) && !navigator.userAgent.match(/iPad/i)) {
 						curPost.width(width);
 					}
 

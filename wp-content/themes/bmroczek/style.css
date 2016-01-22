@@ -196,7 +196,7 @@ body {
 	margin: 0px 5px 0px 0px;	
 }
 
-.home .post, .page-id-66 .post {
+.home .post, .page-id-17 .post {
 	margin-bottom: 20px;
 }
 
@@ -279,16 +279,16 @@ body {
 
 /* APPOINTMENTS */
 
-.page-id-20 .nav div .menu li {
+.page-id-10 .nav div .menu li {
 	display: none;
 }
 
-.page-id-20 #container {
+.page-id-10 #container {
 	height: 100%;
 	min-height: 550px;
 }
 
-.page-id-20 #content {
+.page-id-10 #content {
 	width: 100%;
 	min-width: 800px;
 	padding: 35px 80px 0px 100px;
@@ -298,7 +298,7 @@ body {
 
 }
 
-.post-20 {
+.post-10 {
 	height: 400px;
 	position: relative;
 	margin: 0px;	
@@ -545,7 +545,7 @@ div#birs_appointment_timeoptions {
 	-moz-transform: translate(-50%, -50%);
 }
 
-.page-id-66 .overlay .wrapper {
+.page-id-17 .overlay .wrapper {
 	top: 47%;
 }
 
@@ -559,7 +559,7 @@ div#birs_appointment_timeoptions {
 	height: 450px;
 }
 
-.page-id-66 .overlay .main-img {
+.page-id-17 .overlay .main-img {
 	display: none;
 }
 
@@ -589,7 +589,7 @@ div#birs_appointment_timeoptions {
 
 /* BIO */
 
-.page-id-22 #content, .page-id-6 #content {
+.page-id-6 #content, .page-id-8 #content {
 	padding-top: 0px;
 	padding-right: 100px;
 	width: calc(100% - 100px);
@@ -597,16 +597,16 @@ div#birs_appointment_timeoptions {
 	overflow: hide;
 }
 
-.page-id-6 #content {
+.page-id-8 #content {
 	height: auto;
 	padding-top: 30px;
 }
 
-.page-id-6 .page .entry-title, .page-id-22 .page .entry-title, .page-id-20 .page .entry-title {
+.page-id-8 .page .entry-title, .page-id-6 .page .entry-title, .page-id-10 .page .entry-title {
 	display: none;
 }
 
-.page-id-6 .page p, .page-id-22 .page p {
+.page-id-8 .page p, .page-id-6 .page p {
 	opacity: 0;
 	letter-spacing: 1px;
 	font-size: 11px;
@@ -616,7 +616,7 @@ div#birs_appointment_timeoptions {
 	padding-bottom: 5px;
 }
 
-.page-id-22 .entry-content {
+.page-id-6 .entry-content {
 	position: absolute;	
 	top: 50%;
 	-webkit-transform: translate(0%, -50%)
@@ -691,7 +691,7 @@ div#birs_appointment_timeoptions {
 		-webkit-overflow-scrolling: touch !important;
 	}
 
-	#mobile.home #container, #mobile.page-id-66 #container {
+	#mobile.home #container, #mobile.page-id-17 #container {
 		top: 130px;
 	}
 
@@ -727,16 +727,16 @@ div#birs_appointment_timeoptions {
 		width: 100% !important;
 	}
 
-	#mobile.page-id-6 #content, #mobile.page-id-22 #content {
+	#mobile.page-id-8 #content, #mobile.page-id-6 #content {
 		padding: 0px 0px 60px 20px;
 		min-width: inherit;
 	}
 
-	#mobile.page-id-22 #content {
+	#mobile.page-id-6 #content {
 		min-height: 130px;
 	}
 
-	#mobile .page-id-22 .entry-content {
+	#mobile .page-id-6 .entry-content {
 		position: relative;	
 		-webkit-transform: translate(0%, 0%)
 	}
@@ -805,7 +805,7 @@ div#birs_appointment_timeoptions {
 		box-shadow: none;
 	}
 
-	#mobile .page-id-22 .entry-content, #mobile .page-id-20 .entry-content, #mobile .page-id-6 .entry-content {
+	#mobile .page-id-6 .entry-content, #mobile .page-id-10 .entry-content, #mobile .page-id-8 .entry-content {
 		padding: 0px 20px 20px 20px;
 	}
 	
@@ -823,12 +823,12 @@ div#birs_appointment_timeoptions {
 		font-weight: 700;	
 	}
 
-	#mobile.page-id-20 {
+	#mobile.page-id-10 {
 		overflow: hidden;
 		height: 1100px;
 	}
 
-	#mobile.page-id-20 #container {
+	#mobile.page-id-10 #container {
 		top: 80px;
 		height: 100%;
 		width: 100%;
@@ -836,7 +836,7 @@ div#birs_appointment_timeoptions {
 		overflow: auto !important;	
 	}
 
-	#mobile.page-id-20 #content {
+	#mobile.page-id-10 #content {
 		min-width: 100%;
 		padding: 20px 0px 20px 20px;
 		top: 0px;
@@ -869,7 +869,7 @@ div#birs_appointment_timeoptions {
 		line-height: 18px;
 	}
 
-	#mobile.page-id-20 #header {
+	#mobile.page-id-10 #header {
 		position: absolute;
 	}	
 
@@ -883,12 +883,12 @@ div#birs_appointment_timeoptions {
 		padding-left: 26%;
 	}
 
-	#mobile.home .post .entry-content, #mobile.page-id-66 .post .thumbnail {
+	#mobile.home .post .entry-content, #mobile.page-id-17 .post .thumbnail {
 		width: 60% !important;
 		height: auto;
 	}
 
-	#mobile.page-id-66 .post iframe {
+	#mobile.page-id-17 .post iframe {
 		left: 20%;
 	}
 
@@ -905,7 +905,7 @@ div#birs_appointment_timeoptions {
 	-webkit-overflow-scrolling: touch;
 }
 
-#ipad.page-id-20 #content {
+#ipad.page-id-10 #content {
 	overflow-y: visible !important;
 }
 
@@ -917,4 +917,9 @@ div#birs_appointment_timeoptions {
 	padding-top: 6px;
 }
 
+
+/* NEW AFTER DB DISASTER */
+.page-id-17 .post .entry-content p {
+    display: none;
+}
 
