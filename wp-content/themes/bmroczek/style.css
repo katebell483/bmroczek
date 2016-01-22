@@ -249,24 +249,25 @@ body {
 
 /* FILM PAGE */
 
-.category-video {
+.category-film {
 	opacity: 0;
 }
 
-.category-video .thumbnail {
+.category-film .thumbnail {
 	max-height: 450px;
 	height: 100%;
+    max-width: 100%;
 }
 
-.category-video:hover .play {
+.category-film:hover .play {
 	display: block !important;
 }
 
-.category-video .entry-content {
+.category-film .entry-content {
 	display: none;
 }
 
-.category-video .play {
+.category-film .play {
 	-webkit-filter: invert(100%);
 	position: absolute;
 	top: 50%;
@@ -676,7 +677,7 @@ div#birs_appointment_timeoptions {
 		width: 16px;
 	}
 
-	#mobile .category-video:hover .play {
+	#mobile .category-film:hover .play {
 		display: none !important;
 	}
 	
@@ -722,7 +723,7 @@ div#birs_appointment_timeoptions {
 		overflow: auto;
 	}
 	
-	#mobile .post p img, #mobile .category-video .thumbnail {
+	#mobile .post p img, #mobile .category-film .thumbnail {
 		height: auto !important;
 		width: 100% !important;
 	}
@@ -741,7 +742,7 @@ div#birs_appointment_timeoptions {
 		-webkit-transform: translate(0%, 0%)
 	}
 
-	#mobile .category-video iframe {
+	#mobile .category-film iframe {
 		//margin-bottom: -2px;
 		top: 0px;
 		position: absolute;
@@ -915,11 +916,5 @@ div#birs_appointment_timeoptions {
 
 #ipad #site-subtitle {
 	padding-top: 6px;
-}
-
-
-/* NEW AFTER DB DISASTER */
-.page-id-17 .post .entry-content p {
-    display: none;
 }
 

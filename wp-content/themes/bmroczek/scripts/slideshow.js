@@ -387,8 +387,6 @@ var Slideshow = {
 		if($(target).attr("id") == "player1") return;	
 	
 		if(film) {
-            console.log("HEY!");
-
 			// remove existing iframes and add any missing thumbnails		
 			$("iframe").remove();	
 			$(".thumbnail").show().css("opacity", 1).css("pointer-events", "inherit");
@@ -429,7 +427,7 @@ var Slideshow = {
 			overlay = $(".overlay"),
 			overlayImg = overlay.find(".main-img"),
 			wrapperWidth = Math.ceil(target.width() * overlayImg.height()/target.height()),
-			film = target.parent().hasClass("category-video"),
+			film = target.parent().hasClass("category-film"),
 			title = target.parent().parent().siblings("h1").text();
 			filmTitle = target.siblings("h1").text();
 			title = "<h1 class='overlay-text first-line'>" + title.replace(/;/g, "</h1><h1 class='overlay-text'>") + "</h1>";
@@ -537,7 +535,6 @@ var Slideshow = {
 					// add hover states after loaded 
 					if(!navigator.userAgent.match(/iPhone/i)) {
 						$(curPost).bind( "mouseenter mouseleave", function() {
-							$(".post").removeClass("post-hover");
 							$(this).toggleClass( "post-hover" );
 						});
 					}
